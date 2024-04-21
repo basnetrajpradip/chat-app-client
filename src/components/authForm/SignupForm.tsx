@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Avatar from "@/components/Avatar";
 import { useRouter } from "next/navigation";
+import { io } from "socket.io-client";
 
 export default function SignupForm() {
   const [avatarId, setAavtarId] = useState((Math.random() * 20).toFixed());
@@ -12,6 +13,8 @@ export default function SignupForm() {
   const [error, setError] = useState("");
 
   const router = useRouter();
+
+  const socket = io("http://localhost:4000");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -59,6 +62,7 @@ export default function SignupForm() {
         setPassword("");
         setConfirmPass("");
         setEmail("");
+        socket.emit("joined", "new user");
         router.push("/login");
       } else {
         setError("User registration failed.");

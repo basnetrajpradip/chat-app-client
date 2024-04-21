@@ -4,6 +4,7 @@ export interface userProps {
   username: string | undefined;
   email: string | undefined;
   messages: any[];
+  createdAt: Date;
 }
 
 export interface ChatListProps {

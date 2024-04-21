@@ -2,9 +2,14 @@
 import { useSelectedUser } from "@/store/useStore";
 import { userProps } from "@/types";
 import Image from "next/image";
+import { DateTime } from "luxon";
 
 export default function ChatItem({ user }: { user: userProps }) {
   const setSelectedUser = useSelectedUser((state) => state.setSelectedUser);
+
+  function formatDate(timestamp: any) {
+    return DateTime.fromISO(timestamp).toLocaleString(DateTime.DATE_MED);
+  }
 
   function handleClick(e: React.MouseEvent<HTMLElement>) {
     document.querySelector(".messages")?.classList.remove("hidden");
@@ -24,7 +29,7 @@ export default function ChatItem({ user }: { user: userProps }) {
         </div>
         <div className="flex flex-col justify-between">
           <h3 className="font-semibold text-slate-300 text-lg">{user.username}</h3>
-          <p className="text-slate-400">User has joined</p>
+          <p className="text-slate-400">{`Joined ${formatDate(user.createdAt)}`}</p>
         </div>
       </li>
       <div className="divider my-0"></div>

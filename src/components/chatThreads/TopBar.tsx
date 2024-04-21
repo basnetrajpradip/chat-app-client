@@ -3,8 +3,13 @@ import { FlashIcon } from "@/utils/icons";
 import React from "react";
 import Image from "next/image";
 import CallBtn from "./CallBtn";
+import { DateTime } from "luxon";
 
 export default function TopBar({ selectedUser }: { selectedUser: userProps }) {
+  function formatDate(timestamp: any) {
+    return DateTime.fromISO(timestamp).toLocaleString(DateTime.DATE_MED);
+  }
+
   function handleClick(e: React.MouseEvent<HTMLElement>) {
     document.querySelector(".messages")?.classList.add("hidden");
     document.querySelector(".sidebar")?.classList.remove("hidden");
@@ -24,7 +29,7 @@ export default function TopBar({ selectedUser }: { selectedUser: userProps }) {
           </div>
           <div className="flex flex-col justify-between">
             {selectedUser?.username && <h3 className="font-semibold text-slate-300 text-xl">{selectedUser.username}</h3>}
-            <p className="text-slate-400">Online</p>
+            <p className="text-slate-400">{`Joined ${formatDate(selectedUser.createdAt)}`}</p>
           </div>
         </div>
         <CallBtn />

@@ -4,9 +4,17 @@ import { fetchUsers } from "../../../lib/fetchers";
 import { shallow } from "zustand/shallow";
 import { useAllUsers } from "@/store/useStore";
 import ChatItem from "./ChatItem";
+import { io } from "socket.io-client";
 
 export default function Chatlist({ myUser }: { myUser: any }) {
   const { users, setUsers } = useAllUsers((state: any) => ({ users: state.users, setUsers: state.setUsers }), shallow);
+  useEffect(() => {
+    const socket = io("http://localhost:4000");
+
+    socket.on("new-user", () => {
+      fetchUsers(myUser.id, setUsers);
+    });
+  }, []);
 
   useEffect(() => {
     fetchUsers(myUser.id, setUsers);

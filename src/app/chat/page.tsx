@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { shallow } from "zustand/shallow";
 import { useUser } from "@/store/useStore";
 import Messages from "@/components/chatThreads/Messages";
+import { ChatIcon } from "@livekit/components-react";
 
 export default function Chat() {
   const { myUser, setUser } = useUser((state) => ({ myUser: state.myUser, setUser: state.setUser }), shallow);
@@ -23,8 +24,20 @@ export default function Chat() {
   }, [myUser]);
 
   if (loading) {
-    // Render loading state
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-2">
+        <div className="flex items-center text-md gap-2">
+          <ChatIcon />
+          <div className="font-bold">Chit Chat </div>
+        </div>
+        <div className="flex justify-center ml-2">
+          <span className="loading loading-ring loading-xs"></span>
+          <span className="loading loading-ring loading-sm"></span>
+          <span className="loading loading-ring loading-md"></span>
+          <span className="loading loading-ring loading-lg"></span>
+        </div>
+      </div>
+    );
   }
 
   return (

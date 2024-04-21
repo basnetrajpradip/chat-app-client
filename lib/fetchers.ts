@@ -9,10 +9,10 @@ export async function fetchUsers(userID: string, setUsers: any) {
   setUsers(res.data.filter((user: any) => user._id !== userID));
 }
 
-export async function fetchMessages(sender: any, reciever: any, setMessages: any) {
-  if (sender && reciever) {
+export async function fetchMessages(sender: any, receiver: any, setMessages: any) {
+  if (sender && receiver) {
     try {
-      const res = await fetcher(`/messages?sender=${sender?.username}&reciever=${reciever.username}`);
+      const res = await fetcher(`/messages?sender=${sender?.username}&receiver=${receiver.username}`);
       setMessages(res.data);
     } catch (err) {
       console.log(err);

@@ -1,15 +1,14 @@
-"use client";
-
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchMessages } from "../../../lib/fetchers";
 import { useMessages, useSelectedUser, useUser } from "@/store/useStore";
 import { shallow } from "zustand/shallow";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import MessageItem from "./MessageItem";
+import { io } from "socket.io-client";
 
-export default function MesssageList() {
+export default function MessageList() {
   const sender = useUser((state: any) => state.myUser);
-  const reciever = useSelectedUser((state: any) => state.selectedUser);
+  const receiver = useSelectedUser((state: any) => state.selectedUser);
   const { messages, setMessages } = useMessages(
     (state: any) => ({
       messages: state.messages,
@@ -19,16 +18,43 @@ export default function MesssageList() {
   );
 
   const [parent] = useAutoAnimate();
+  const [fetching, setFetching] = useState(true);
+  const messagesListEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetchMessages(sender, reciever, setMessages);
-  }, [reciever]);
+    const socket = io("http://localhost:4000");
+
+    // Fetch messages initially when the component mounts
+    fetchMessages(sender, receiver, setMessages)
+      .then(() => setFetching(false)) // Reset fetching flag on success
+      .catch(() => setFetching(false)); // Reset fetching flag on error
+
+    socket.on("refresh", () => {
+      if (!fetching) {
+        // Check if not already fetching
+        setFetching(true); // Set fetching flag to true
+        fetchMessages(sender, receiver, setMessages)
+          .then(() => setFetching(false)) // Reset fetching flag on success
+          .catch(() => setFetching(false)); // Reset fetching flag on error
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+      socket.off("refresh");
+    };
+  }, [sender, receiver, setMessages, fetching]); // Include fetching in dependencies
+
+  useEffect(() => {
+    if (messagesListEndRef.current) {
+      messagesListEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <div ref={parent} className="w-full mb-10 flex flex-col max-h-[75vh] overflow-auto no-scrollbar">
-      {messages
-        ? messages.map((item: any, i: number) => <MessageItem key={i} user={sender.username == item.sender ? true : false} message={item.message} />)
-        : ""}
+      {messages ? messages.map((item: any) => <MessageItem key={item._id} user={sender.username === item.sender} message={item.message} />) : null}
+      <div ref={messagesListEndRef} />
     </div>
   );
 }
