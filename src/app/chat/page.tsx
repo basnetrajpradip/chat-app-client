@@ -1,7 +1,6 @@
 "use client";
 import Sidebar from "../../components/sidebar/Sidebar";
 import React, { useEffect, useState } from "react";
-import { fetchUsers } from "../../../lib/fetchers";
 import { useSession } from "next-auth/react";
 import { shallow } from "zustand/shallow";
 import { useUser } from "@/store/useStore";
