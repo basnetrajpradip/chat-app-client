@@ -22,9 +22,9 @@ export default function Page() {
         console.error(e);
       }
     })();
-  }, []);
+  }, [name]);
 
-  if (token === "") {
+  if (!myUser || token === "") {
     return <div>Getting token...</div>;
   }
 
