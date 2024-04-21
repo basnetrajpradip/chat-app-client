@@ -9,7 +9,7 @@ import { useUser } from "@/store/useStore";
 export default function Page() {
   const myUser = useUser((state) => state.myUser);
   const room = "quickstart-room";
-  const name = myUser.username;
+  const name = myUser?.username;
   const [token, setToken] = useState("");
 
   useEffect(() => {
