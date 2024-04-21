@@ -18,7 +18,7 @@ export default function TopBar({ selectedUser }: { selectedUser: userProps }) {
   return (
     <div data-theme="dark" className={`${selectedUser ? " " : "md:hidden"}`}>
       <div className="w-full px-10 py-4 flex justify-between items-center">
-        <div className="flex gap-5">
+        <div className="flex gap-3">
           <button onClick={handleClick} className="md:hidden">
             <FlashIcon />
           </button>

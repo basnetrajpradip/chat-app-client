@@ -19,4 +19,5 @@ export async function fetchMessages(sender: any, receiver: any, setMessages: any
       setMessages(null);
     }
   }
+  console.log(process.env.API_URL);
 }

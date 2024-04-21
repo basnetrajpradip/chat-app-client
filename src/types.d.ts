@@ -36,6 +36,7 @@ declare global {
       MONGODB_URI: string;
       NEXTAUTH_SECRET: string;
       NEXTAUTH_URL: string;
+      API_URL: string;
     }
   }
 }
