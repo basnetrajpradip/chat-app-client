@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const fetcher = axios.create({
-  baseURL: "http://localhost:4000/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL + "/api",
 });
 
 export async function fetchUsers(userID: string, setUsers: any) {
@@ -19,5 +19,4 @@ export async function fetchMessages(sender: any, receiver: any, setMessages: any
       setMessages(null);
     }
   }
-  console.log(process.env.API_URL);
 }

@@ -27,7 +27,7 @@ export default function MessageInput() {
   }
 
   useEffect(() => {
-    socket = io("http://localhost:4000");
+    socket = io(process.env.NEXT_PUBLIC_API_URL);
     return () => {
       socket.disconnect();
     };

@@ -9,7 +9,7 @@ import { io } from "socket.io-client";
 export default function Chatlist({ myUser }: { myUser: any }) {
   const { users, setUsers } = useAllUsers((state: any) => ({ users: state.users, setUsers: state.setUsers }), shallow);
   useEffect(() => {
-    const socket = io("http://localhost:4000");
+    const socket = io(process.env.NEXT_PUBLIC_API_URL);
 
     socket.on("new-user", () => {
       fetchUsers(myUser.id, setUsers);
