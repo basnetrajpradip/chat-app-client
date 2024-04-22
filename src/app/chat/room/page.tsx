@@ -25,7 +25,16 @@ export default function Page() {
   }, [name]);
 
   if (!myUser || token === "") {
-    return <div>Getting token...</div>;
+    return (
+      <div className="flex justify-center items-center py-10">
+        <div className="flex justify-center ml-2">
+          <span className="loading loading-ring loading-xs"></span>
+          <span className="loading loading-ring loading-sm"></span>
+          <span className="loading loading-ring loading-md"></span>
+          <span className="loading loading-ring loading-lg"></span>
+        </div>
+      </div>
+    );
   }
 
   return (

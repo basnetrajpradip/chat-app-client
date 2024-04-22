@@ -16,7 +16,7 @@ export default function TopBar({ selectedUser }: { selectedUser: userProps }) {
     document.querySelector(".selected-user")?.classList.remove("selected-user");
   }
   return (
-    <div data-theme="dark" className={`${selectedUser ? " " : "md:hidden"}`}>
+    <div data-theme="dark" className={`${selectedUser ? " " : "md:hidden"} max-sm:fixed max-sm:z-10 max-sm:w-full`}>
       <div className="w-full px-10 py-4 flex justify-between items-center">
         <div className="flex gap-3">
           <button onClick={handleClick} className="md:hidden">
