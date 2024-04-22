@@ -23,7 +23,18 @@ export default function Chatlist({ myUser }: { myUser: any }) {
   return (
     <ul className="my-5 flex flex-col">
       {/* ChatItem */}
-      {users ? users?.reverse()?.map((user: any) => <ChatItem key={user._id} user={user} />) : <span className="loading loading-ring w-16"></span>}
+      {users ? (
+        users?.reverse()?.map((user: any) => <ChatItem key={user._id} user={user} />)
+      ) : (
+        <div className="flex justify-center items-center">
+          <div className="flex justify-center ml-2">
+            <span className="loading loading-ring loading-xs"></span>
+            <span className="loading loading-ring loading-sm"></span>
+            <span className="loading loading-ring loading-md"></span>
+            <span className="loading loading-ring loading-lg"></span>
+          </div>
+        </div>
+      )}
     </ul>
   );
 }

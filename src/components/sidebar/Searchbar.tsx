@@ -7,7 +7,7 @@ import { signOut } from "next-auth/react";
 
 export default function Searchbar({ myUser }: { myUser: any }) {
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 ">
       <div className="avatar online">
         <div className="w-12 rounded-full ring">
           <Image src={myUser.avatarId} width={256} height={256} alt="avatar" priority={true} />
